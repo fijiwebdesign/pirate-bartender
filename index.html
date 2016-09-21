@@ -4,14 +4,78 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<title>Pirate Bartender</title>
+	<title>Bartender Grouse</title>
 	<link rel="stylesheet" href="css/styles.css">
 	<link rel="stylesheet" href="css/normalize.css">
 </head>
-<body>
-	<h1 class="text-center">Pirate Bartender App Soon to Come</h1>
+<body class="bg-img">
 
+
+
+
+	
+		<div class="container" id="header-content">
+			<h2 class="text-center">Welcome to the Grouse Room.</h2>
+			<h4 class="text-center header">If you are seeking to have the best cocktail experience of your life, then you've come to the right place. Simply answer each question as decisively as possible so that William, our bartender, can make some magic.</h4>
+			<h4 class="text-center header">No disappointments allowed!</h4>
+		</div><br/>
+		<div class="container text-center">
+			<button class="btn btn-primary" id="ok-btn">OK</button>
+		</div>
+	
+
+
+
+		<div class="container-fluid text-center" id="user-content">
+			<div class="container-fluid text-center" id="img-section">
+				<ul class="list-group" id="image-list">
+					<li><img src="https://scontent-dft4-1.xx.fbcdn.net/v/t1.0-9/13445398_518326608350466_9162003980221732477_n.jpg?oh=df2bf3e4a821b651a1e88a9501967814&oe=587E0530" alt="William, the bartender" height="300" width="300"></li>
+					<li id="bubble"><img src="http://www.freestockphotos.biz/pictures/15/15680/Illustration+of+a+cartoon+speech+bubble.png" alt="chat bubble" height="300" width="300"></li>
+					<!--<li id="last-photo"><img src="https://scontent-dft4-1.xx.fbcdn.net/v/t1.0-9/11231210_396264333890028_1896962680507945809_n.jpg?oh=f04d99b535fb9032f4b6de6444b9a92c&oe=583A8D58" alt="bartender pouring drink" height="300" width="300"></li>-->
+					<li id="question"></li>
+				</ul>
+			</div>
+		
+			<br/>
+			<p class="text-center white" id="user-preference"></p>
+			<div class="container text-center">
+				<button class="btn btn-primary" id="yes-btn">Yes</button>
+				<button class="btn btn-primary" id="no-btn">No</button>
+			</div>
+			<br/>
+			<div class="text-center" id="nxt-btn">NEXT QUESTION</div>
+		</div>
+
+		<!--<div class="container-fluid text-center" id="last-content">
+			<div class="container-fluid text-center" id="img-section">
+				<ul class="list-group" id="image-list">
+					<li id="bubble"><img src="http://www.freestockphotos.biz/pictures/15/15680/Illustration+of+a+cartoon+speech+bubble.png" alt="chat bubble" height="300" width="300"></li>
+					<li id="last-photo"><img src="https://scontent-dft4-1.xx.fbcdn.net/v/t1.0-9/11231210_396264333890028_1896962680507945809_n.jpg?oh=f04d99b535fb9032f4b6de6444b9a92c&oe=583A8D58" alt="bartender pouring drink" height="300" width="300"></li>
+					<li id="question"></li>
+				</ul>
+			</div>
+		
+			<br/>
+			<p class="text-center white" id="user-preference"></p>
+		</div>-->
+
+		<!--modal-->
+
+		<div class="container-fluid text-center" id="last-page">
+			<div class="container" id="logo"></div>
+			<div class="container text-center" id="drink-results"></div>
+				<!--<ul class="list-group" id="drink-results">
+					<li id="last-photo"><img src="http://thegrouseroom.com.s50556.gridserver.com/wp-content/uploads/2014/10/logo1.png" alt="Grouse Room Logo" height="180" width="300"></li>
+				</ul>-->
+			
+		</div>
+
+
+<!--order of scripts are important-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 	<script src="js/app.js"></script>
 </body>
 </html>

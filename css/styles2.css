@@ -1,0 +1,41 @@
+* {
+	box-sizing: border-box;
+}
+
+ul {
+	list-style-type: none;
+}
+
+
+    /*covers entire window*/
+.bg-img {
+	background: url("http://thegrouseroom.com/wp-content/uploads/2014/10/grouse_new_2015.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
+
+.header:nth-child(3) { /*the second sibling .header*/
+	color: red;
+	font-size: 20px;
+}
+
+#header-content {
+	border: solid 2px red;
+	margin-top: 108px;
+	background: white;
+	opacity: .5;
+	display: none;
+}
+
+#ok-btn {
+	display: none;
+}
+
+#question-content {
+	/*display: none;*/
+	background: #eee;
+	height: 100vh;
+	border: solid 2px red;
+}
