@@ -92,10 +92,6 @@ function endQuestions() {
 			var preferences = new Ingredients(drinkIngredientsRequested);
 			
 			
-			var randomNumber = Math.floor(Math.random() * 4) //random number between 0 and 4
-			//0 because
-			var createDrink = " "
-
 			var randomNumber = Math.floor(Math.random() * 3) //random number between 0 and 4
 			//0 because
 			var createDrink = " "
@@ -111,22 +107,24 @@ function endQuestions() {
 			$("#question").text("William made you a special cocktail with the following ingredients: "  + createDrink);
 			
 			var bestDrink = null
+			var bestDrinkName
 			var matches_old = 0
-            Object.keys(specialties.drinks).forEach(function(name) {
+            Object.keys(classics.drinks).forEach(function(name) {
 				var matches = 0
-				var drink = specialties.drinks[name]
+				var drink = classics.drinks[name]
 				ingredients.forEach(function(ingredient) {
 					if (drink.indexOf(ingredient) != -1) {
 						matches++
 					}
 				})
-				if (matches_old < matches) {
+				if (matches_old <= matches) {
 					bestDrink = drink
+					bestDrinkName = name.replace(/_/g, " ")
 				}
 				matches_old = matches
             })
 
-            $("#question").text("William made you a special cocktail with: "  + bestDrink.join(", "));
+            $("#question").text("William made you a special cocktail called " + bestDrinkName + " with: "  + bestDrink.join(", "));
 			
 
 			
