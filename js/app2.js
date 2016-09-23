@@ -30,6 +30,15 @@ $(document).ready(function() {
 	var Pantry = function(pantry) {
 		this.pantry = pantry;
 	}
+	
+	Pantry.prototype.getItem = function(pref, index) {
+        var item = this.pantry[pref];
+        if (!item) {
+        	alert("Item does not exist");
+        }
+		return item[index];
+	}
+	
 	// pantryItems object with key arrays
 	var pantryItems = new Pantry({
 		strong: ['Rum', 'Whiskey', 'Gin'],
@@ -53,18 +62,6 @@ $(document).ready(function() {
 		"fruity"
 	])
 
-
-var Pantry = function(pantry) {
-		this.pantry = pantry;
-	}
-	// pantryItems object with key arrays
-	var pantryItems = new Pantry({
-		strong: ['Famous Grouse Scotch', 'Bourbon', 'Vodka', 'Gin'],
-		 salty: ['Olives', 'Salt', 'Bacon', 'Salt'],
-		 bitter: ['Lemon Peel', 'Lime Juice', 'Tonic', 'Bitters'],
-		 sweet: ['St. Germain elderflower liquer', 'Cherry Heering Brandy', 'Local Cane Sugar', 'Sweet Vermouth'], 
-		 fruity: ['Orange Juice', 'Cucumber', 'Cherry', 'Squeezed Grapefruit'] 
-	})
 
 var Drink = function(drinks) {
 	this.drinks = drinks;
@@ -95,14 +92,42 @@ function endQuestions() {
 			var preferences = new Ingredients(drinkIngredientsRequested);
 			
 			
-			var randomNumber = Math.floor(Math.random() * 4) //random number between 0 and 4
+			var randomNumber = Math.floor(Math.random() * 3) //random number between 0 and 4
 			//0 because
 			var createDrink = " "
-
+			
+			var ingredients = [];
 			for (var i = 0 ; i < preferences.ingredients.length; i++) {
-				 createDrink += pantryItems.pantry[preferences.ingredients[i]][randomNumber] + ", ";
-				$("#question").text("William made you a special cocktail with the following ingredients: "  + createDrink);
+				 var pref = preferences.ingredients[i];
+				 var ingredient = pantryItems.getItem(pref, randomNumber)
+				 createDrink += ingredient + ", ";
+				ingredients.push(ingredient)
 			}
+
+			$("#question").text("William made you a special cocktail with the following ingredients: "  + createDrink);
+			
+			var bestDrink = null
+			var bestDrinkName
+			var matches_old = 0
+            Object.keys(classics.drinks).forEach(function(name) {
+				var matches = 0
+				var drink = classics.drinks[name]
+				ingredients.forEach(function(ingredient) {
+					if (drink.indexOf(ingredient) != -1) {
+						matches++
+					}
+				})
+				if (matches_old <= matches) {
+					bestDrink = drink
+					bestDrinkName = name.replace(/_/g, " ")
+				}
+				matches_old = matches
+            })
+
+            $("#question").text("William made you a special cocktail called " + bestDrinkName + " with: "  + bestDrink.join(", "));
+			
+
+			
 			yesButton.remove()
 			noButton.remove()
 			nextButton.remove()
