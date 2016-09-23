@@ -1,4 +1,4 @@
-/** {
+* {
 	box-sizing: border-box;
 }
 
@@ -6,6 +6,10 @@ ul {
 	list-style-type: none;
 }
 
+h2 {
+	font-family: 'Merriweather', serif;
+
+}
 
 .bg-img {
 	background: url("http://thegrouseroom.com/wp-content/uploads/2014/10/grouse_new_2015.jpg") no-repeat center center fixed;
@@ -24,7 +28,7 @@ ul {
 	font-size: 20px;
 }
 
-#header-content {
+#intro-content {
 	border: solid 2px red;
 	margin-top: 108px;
 	background: white;
@@ -32,8 +36,8 @@ ul {
 	display: none;
 }
 
-#last-content,
-#user-content {
+#results-content,
+#question-content {
 
 	margin: 30px auto;
 	display: none;
@@ -59,13 +63,6 @@ ul {
 	left: 54%;
 }
 
-#question {
-	position: absolute;
-	top: 9%;
-	right: 10%;
-	border: solid 1px green;
-}
-
 #nxt-btn {
 	font-size: 20px;
 	color: white;
@@ -80,12 +77,12 @@ ul {
 	margin-top: 2px;
 }
 
-#last-page {
+#results {
 	display: none;
 	min-width: 100vh;
 	min-height: 100vh;
 	background: white;
-	color: white;
+	color: black;
 }
 
 #logo {
@@ -96,5 +93,103 @@ ul {
   	background-size: cover;
 }
 
+#question {
+	display: none;
+	position: absolute;
+	top: 9%;
+	right: 10%;
+	font-style: bold;
 
-  */
+}
+
+#results-content {
+	/*display: none;*/
+	background: #eee;
+	height: 100vh;
+	border: solid 2px red;
+	display: none;
+}
+
+#nxt-btn,
+#user-preference {
+	display: none;
+}
+
+@media only screen and (max-width: 1015px ) {
+	#question {
+		top: 9%;
+		right: 21%;
+	}  
+}
+
+
+@media only screen and (min-width: 900px ) {
+	#question {
+		top: 9%;
+		right: 19%;
+	}  
+}
+
+@media only screen and (max-width: 846px ) {
+	#question {
+		top: 9%;
+		right: 16%;
+	}  
+}
+
+@media only screen and (max-width: 836px ) {
+	#question {
+		top: 9%;
+		right: 16%;
+	}  
+}
+
+@media only screen and (max-width: 830px ) {
+	#question {
+		top: 9%;
+		right: 16%;
+	}  
+}
+
+@media only screen and (max-width: 826px ) {
+	#question {
+		top: 9%;
+		right: 15%;
+	}  
+}
+
+@media only screen and (max-width: 700px ) {
+	#question {
+		top: 9%;
+		right: 9%;
+	}  
+}
+
+@media only screen and (max-width: 650px ) {
+	#question {
+		top: 9%;
+		right: 6%;
+	}  
+}
+
+@media only screen and (max-width: 614px ) {
+	#question {
+		top: 9%;
+		right: 4%;
+	}  
+}
+
+@media only screen and (max-width: 320px ) {
+	#question {
+		top: 9%;
+		right: 21%;
+	}
+
+	#william {
+		margin-top: 61px;
+	}
+
+
+}
+
+
