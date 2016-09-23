@@ -41,8 +41,8 @@ $(document).ready(function() {
 	
 	// pantryItems object with key arrays
 	var pantryItems = new Pantry({
-		strong: ['Vodka', 'Bourbon', 'Gin', 'Famous Grouse Scotch'],
-		 salty: ['Olives', 'Salt', 'Bacon', 'Salt'],
+		strong: ['Vodka', 'Bourbon', 'Gin', 'Famous Grouse Scotch', 'Scotch'],
+		 salty: ['Olives', 'Salt', 'Bacon'],
 		 bitter: ['Lemon Peel', 'Tonic', 'Bitters', 'Lemon Juice'],
 		 sweet: ['Local Cane Sugar', 'Honey', 'Soda', 'Syrup'], 
 		 fruity: ['Freshly Squeezed Orange Juice', 'Freshly Squeezed Grapefruit Juice', 'Cucumber', 'Orange Peel'] 
@@ -55,6 +55,15 @@ $(document).ready(function() {
         	alert("Item does not exist");
         }
 		return item[index];
+	}
+
+	//method that all instances of the obj Pantry can utilize
+	Pantry.prototype.getItemList = function(pref) {
+        var item = this.pantry[pref];
+        if (!item) {
+        	alert("Item does not exist");
+        }
+		return item;
 	}
 
 	
@@ -129,14 +138,20 @@ function endQuestions() {
 			var createDrink = " "
 			
 			var ingredients = [];
+			var pantryList = [];
 			for (var i = 0 ; i < preferences.ingredients.length; i++) {
 				 var pref = preferences.ingredients[i]; //lists each item in preferences
 				 console.log('preference: ', pref)
+				 var list = pantryItems.getItemList(pref);
+				 console.log('Concat', pantryList, list)
+				 pantryList = pantryList.concat(list);
 				 var ingredient = pantryItems.getItem(pref, randomNumber) //sends each pref and the randomNum as index
 				 createDrink += ingredient + ", ";
 				 console.log('random selection for '+ pref + ' is ', createDrink)
 				ingredients.push(ingredient)
 			}
+
+			console.log('pantryList', pantryList)
 
 			//$displayQuestion.text("William made you a special cocktail with the following ingredients: "  + createDrink);
 			
@@ -146,7 +161,7 @@ function endQuestions() {
             Object.keys(classics.drinks).forEach(function(name) {
 				var matches = 0
 				var drink = classics.drinks[name]
-				ingredients.forEach(function(ingredient) {
+				pantryList.forEach(function(ingredient) {
 					if (drink.indexOf(ingredient) != -1) {
 						matches++
 					}
@@ -161,7 +176,7 @@ function endQuestions() {
             Object.keys(specialties.drinks).forEach(function(name) {
 				var matches = 0
 				var drink = specialties.drinks[name]
-				ingredients.forEach(function(ingredient) {
+				pantryList.forEach(function(ingredient) {
 					if (drink.indexOf(ingredient) != -1) {
 						matches++
 					}
