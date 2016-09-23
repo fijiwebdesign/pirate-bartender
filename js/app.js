@@ -37,14 +37,15 @@ $(document).ready(function() {
 	var Pantry = function(pantry) {
 		this.pantry = pantry;
 	}
+
 	
 	// pantryItems object with key arrays
 	var pantryItems = new Pantry({
-		strong: ['Rum', 'Whiskey', 'Gin'],
-		 salty: ['Olives', 'Salt', 'Bacon'],
-		 bitter: ['Lemon Peel', 'Tonic', 'Bitters'],
-		 sweet: ['Sugar Cube', 'Honey', 'Cola'], 
-		 fruity: ['Orange', 'Cassis', 'Cherry'] 
+		strong: ['Vodka', 'Bourbon', 'Gin', 'Famous Grouse Scotch'],
+		 salty: ['Olives', 'Salt', 'Bacon', 'Salt'],
+		 bitter: ['Lemon Peel', 'Tonic', 'Bitters', 'Lemon Juice'],
+		 sweet: ['Local Cane Sugar', 'Honey', 'Soda', 'Syrup'], 
+		 fruity: ['Freshly Squeezed Orange Juice', 'Freshly Squeezed Grapefruit Juice', 'Cucumber', 'Orange Peel'] 
 	})
 
 	//method that all instances of the obj Pantry can utilize
@@ -77,22 +78,31 @@ var Drink = function(drinks) {
 
 var specialties = new Drink({
 	Grouse_Hiball: ['Lemon Juice', 'Soda', 'Scotch'],
-	Scottish_Maid: ['Famous Grouse Scotch', 'St Germain elderflower liquer', 'cucumber', 'Lemon Juice'],
+	Scottish_Maid: ['Famous Grouse Scotch', 'St Germain elderflower liquer', 'Cucumber', 'Lemon Juice'],
 	Rob_Roy: ['Famous Grouse Scotch', 'Sweet Vermouth', 'Bitters'],
-	Blood_and_Sand: ['Famous Grouse Scotch', 'Cherry Heering Brandy', 'Orange Juice', 'Sweet Vermouth']
+	Blood_and_Sand: ['Famous Grouse Scotch', 'Cherry Heering Brandy', 'Freshly Squeezed Orange Juice', 'Sweet Vermouth']
 })
 
 var classics = new Drink({
-	Old_Fashioned: ['Bourbon', 'Bitters', 'Orange Juice', 'Local Cane Sugar'],
+	Old_Fashioned: ['Bourbon', 'Bitters', 'Freshly Squeezed Orange Juice', 'Local Cane Sugar'],
 	Perfect_Manhattan: ['Bourbon', 'Sweet Vermouth'],
 	Sazerac: ['Bourbon', 'Bitters', 'Local Cane Sugar', 'Lemon Peel'],
 	Moscow_Mule: ['Vodka', 'Lime Juice'],
 	Tom_Collins: ['Gin', 'Lemon Juice', 'Local Cane Sugar', 'Soda'],
 	John_Collins: ['Bourbon', 'Lemon Peel', 'Local Cane Sugar', 'Soda'],
-	The_Brown_Dirby: ['Bourbon', 'Squeezed Grapefruit', 'Local Cane Sugar']
+	The_Brown_Dirby: ['Bourbon', 'Freshly Squeezed Grapefruit Juice', 'Local Cane Sugar']
 })
 
-console.log(specialties.drinks)
+console.log(specialties.drinks);
+var grouse = Object.keys(specialties.drinks);
+console.log(grouse);
+var loop = grouse.forEach(function(drinkName) {
+	//console.log(drinkName);
+	var drinkArray = [];
+	drinkArray.push(drinkName);
+	console.log(drinkArray)
+})
+
 
 function yesIngredients() {
 	if  (bartenderQuestions.question[questionIndex]) {
@@ -120,9 +130,11 @@ function endQuestions() {
 			
 			var ingredients = [];
 			for (var i = 0 ; i < preferences.ingredients.length; i++) {
-				 var pref = preferences.ingredients[i];
-				 var ingredient = pantryItems.getItem(pref, randomNumber)
+				 var pref = preferences.ingredients[i]; //lists each item in preferences
+				 console.log('preference: ', pref)
+				 var ingredient = pantryItems.getItem(pref, randomNumber) //sends each pref and the randomNum as index
 				 createDrink += ingredient + ", ";
+				 console.log('random selection for '+ pref + ' is ', createDrink)
 				ingredients.push(ingredient)
 			}
 
@@ -134,6 +146,21 @@ function endQuestions() {
             Object.keys(classics.drinks).forEach(function(name) {
 				var matches = 0
 				var drink = classics.drinks[name]
+				ingredients.forEach(function(ingredient) {
+					if (drink.indexOf(ingredient) != -1) {
+						matches++
+					}
+				})
+				if (matches_old <= matches) {
+					bestDrink = drink
+					bestDrinkName = name.replace(/_/g, " ")
+				}
+				matches_old = matches
+            })
+
+            Object.keys(specialties.drinks).forEach(function(name) {
+				var matches = 0
+				var drink = specialties.drinks[name]
 				ingredients.forEach(function(ingredient) {
 					if (drink.indexOf(ingredient) != -1) {
 						matches++
@@ -211,3 +238,5 @@ $nextButton.click(function() {
 
 
 })
+
+
