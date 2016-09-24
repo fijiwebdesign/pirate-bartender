@@ -38,16 +38,14 @@ $(document).ready(function() {
 		this.pantry = pantry;
 	}
 
-	
-	// pantryItems object with key arrays
 	var pantryItems = new Pantry({
-		strong: ['Vodka', 'Bourbon', 'Gin', 'Famous Grouse Scotch'],
-		 salty: ['Olives', 'Salt', 'Bacon', 'Salt'],
-		 bitter: ['Lemon Peel', 'Tonic', 'Bitters', 'Lemon Juice'],
-		 sweet: ['Local Cane Sugar', 'Honey', 'Soda', 'Syrup'], 
-		 fruity: ['Freshly Squeezed Orange Juice', 'Freshly Squeezed Grapefruit Juice', 'Cucumber', 'Orange Peel'] 
-	})
-
+         strong: ['Vodka', 'Bourbon', 'Gin', 'Famous Grouse Scotch', 'Scotch'],
+          salty: ['Olives', 'Salt', 'Bacon'],
+          bitter: ['Lemon Peel','Tonic', 'Bitters', 'Lemon Juice'],
+          sweet: ['Local Cane Sugar', 'Honey', 'Soda', 'Syrup'], 
+          fruity: ['Freshly Squeezed Orange Juice', 'Freshly Squeezed Grapefruit Juice', 'Cucumber', 'Orange Peel'] 
+     })
+	
 	//method that all instances of the obj Pantry can utilize
 	Pantry.prototype.getItem = function(pref, index) {
         var item = this.pantry[pref];
@@ -57,11 +55,20 @@ $(document).ready(function() {
 		return item[index];
 	}
 
+	Pantry.prototype.getItemList = function(pref) {
+        var item = this.pantry[pref];
+        if (!item) {
+        	alert("Item does not exist");
+        }
+		return item;
+	}
 	
 	// Ingredients constructor function
 	var Ingredients = function(ingredients) {
-		this.ingredients = ingredients;
+		this.ingredients = ingredients; 
 	}
+	
+
 	//drinkIngredients object
 	var drinkIngredients = new Ingredients([
 		"strong",
@@ -93,15 +100,6 @@ var classics = new Drink({
 	The_Brown_Dirby: ['Bourbon', 'Freshly Squeezed Grapefruit Juice', 'Local Cane Sugar']
 })
 
-console.log(specialties.drinks);
-var grouse = Object.keys(specialties.drinks);
-console.log(grouse);
-var loop = grouse.forEach(function(drinkName) {
-	//console.log(drinkName);
-	var drinkArray = [];
-	drinkArray.push(drinkName);
-	console.log(drinkArray)
-})
 
 
 function yesIngredients() {
@@ -128,13 +126,17 @@ function endQuestions() {
 			//0 because
 			var createDrink = " "
 			
-			var ingredients = [];
+			var ingredients = []
+			var pantryList = []
 			for (var i = 0 ; i < preferences.ingredients.length; i++) {
 				 var pref = preferences.ingredients[i]; //lists each item in preferences
-				 console.log('preference: ', pref)
+				 console.log('preference: ', pref);
+				 var list = pantryItems.getItemList(pref);
+				 console.log('Concat', pantryList, list);
+				 pantryList = pantryList.concat(list)
 				 var ingredient = pantryItems.getItem(pref, randomNumber) //sends each pref and the randomNum as index
 				 createDrink += ingredient + ", ";
-				 console.log('random selection for '+ pref + ' is ', createDrink)
+				 console.log('random selection for ' + pref + ' is ', createDrink)
 				ingredients.push(ingredient)
 			}
 
@@ -146,7 +148,7 @@ function endQuestions() {
             Object.keys(classics.drinks).forEach(function(name) {
 				var matches = 0
 				var drink = classics.drinks[name]
-				ingredients.forEach(function(ingredient) {
+				pantryList.forEach(function(ingredient) {
 					if (drink.indexOf(ingredient) != -1) {
 						matches++
 					}
@@ -161,7 +163,7 @@ function endQuestions() {
             Object.keys(specialties.drinks).forEach(function(name) {
 				var matches = 0
 				var drink = specialties.drinks[name]
-				ingredients.forEach(function(ingredient) {
+				pantryList.forEach(function(ingredient) {
 					if (drink.indexOf(ingredient) != -1) {
 						matches++
 					}
@@ -172,16 +174,18 @@ function endQuestions() {
 				}
 				matches_old = matches
             })
-
-            //$('#cocktail-item').text("William made you a " + bestDrinkName + " using: "  + bestDrink.join(", "));
+            var cocktail = '<li id="cocktail"><h4>William made you a... <br/></br><span style="color: red; font-size: 57px"><em>' + bestDrinkName + '</em></span></h4></li>'
+            var cocktailIngredients = '<li><h5><span style="color: red">' +bestDrink.join("</br>") + '</span></h5></li>'
 			$barPage.hide('puff', function() {
 				
 				$('#results').fadeIn(1000, function() {
 					$('#drink-shaker').toggle('shake', { times: 30 }, 'slow', function() {
 						$(this).hide();
-						$('#drink-results').prepend("<li>William made you a " + bestDrinkName + " using: "  + bestDrink.join(", ") +"</li>").show();
-					});
-				});
+						$('#drink-results').prepend(cocktail);
+						$('#ingredients').append(cocktailIngredients);
+						$('#drink-results-container').show('slide');
+					})
+				})
 			})
 		}	
 	}

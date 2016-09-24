@@ -6,9 +6,24 @@ ul {
 	list-style-type: none;
 }
 
-h2 {
+.merriweather {
 	font-family: 'Merriweather', serif;
 
+}
+
+#intro-content,
+#question-content,
+#ok-btn,
+#results,
+#question,
+#nxt-btn,
+#user-preference,
+#drink-results-container {
+	display: none;
+}
+
+.white {
+	color: white;
 }
 
 .bg-img {
@@ -17,10 +32,6 @@ h2 {
   	-moz-background-size: cover;
   	-o-background-size: cover;
   	background-size: cover;
-}
-
-.white {
-	color: white;
 }
 
 .header:nth-child(3) { 
@@ -32,35 +43,36 @@ h2 {
 	border: solid 2px red;
 	margin-top: 108px;
 	background: white;
-	opacity: .5;
-	display: none;
+	opacity: .7;
 }
 
-#results-content,
 #question-content {
-
 	margin: 30px auto;
-	display: none;
 	margin-top: 120px;
 }
 
-#ok-btn {
-	display: none;
+#results {
+	background: transparent;
+	color: white;
 }
+
 
 #image-list li {
 	display: inline;
 
 }
 
-#bubble > img {
-	display: none;
-}
-
 #bubble {
 	position: absolute;
 	top: -4%;
 	left: 54%;
+}
+
+#question {
+	position: absolute;
+	top: 9%;
+	right: 10%;
+	font-style: bold;
 }
 
 #nxt-btn {
@@ -77,62 +89,30 @@ h2 {
 	margin-top: 2px;
 }
 
-#results {
-	display: none;
-	min-width: 100vh;
-	min-height: 100vh;
-	background: transparent;
-	color: white;
-	position: relative;
-	z-index: 10000000;
-}
-
-#logo {
-	background: url("http://thegrouseroom.com.s50556.gridserver.com/wp-content/uploads/2014/10/logo1.png") no-repeat center center fixed;
-	-webkit-background-size: cover;
-  	-moz-background-size: cover;
-  	-o-background-size: cover;
-  	background-size: cover;
-}
-
-#question {
-	display: none;
-	position: absolute;
-	top: 9%;
-	right: 10%;
-	font-style: bold;
-
-}
-
-#results-content {
-	/*display: none;*/
-	background: #eee;
-	height: 100vh;
-	border: solid 2px red;
-	display: none;
-}
-
-#nxt-btn,
-#user-preference {
-	display: none;
-}
-
 #drink-shaker {
 	margin-top: 40px;
 }
 
-#drink-results {
+#drink-results-container {
 	margin-top: 108px;
 	background: white;
-	opacity: .5;
-	color: black;
+	border: solid red 2px;
+	opacity: .7;
 	padding: 50px;
-	display: none;
-	font-family: 'Merriweather', serif;
+	color: black;
 	font-size: 20px;
 } 
 
+#drink-results {
+	list-style-type: none;
+	font-family: 'Merriweather', serif;
+	margin-top: -46px;
+}
 
+
+#ingredients {
+	margin-top: 50px;
+}
 
 @media only screen and (max-width: 1015px ) {
 	#question {
