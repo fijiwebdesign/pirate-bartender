@@ -17,6 +17,8 @@ $(document).ready(function() {
 	var questionIndex = 0
 	// an array of user drinkIngredients preferences
 	var drinkIngredientsRequested = []
+	// an array of user drinkIngredients not requested
+	var drinkIngredientsNotRequested = []
 	$displayQuestion.hide();
 
 	// Questions constructor function
@@ -83,14 +85,20 @@ var Drink = function(drinks) {
 	this.drinks = drinks;
 }
 
-var specialties = new Drink({
+Drink.prototype.matchingIngredients = function(drinkName, ingredients) {
+	var drink = this.drinks[drinkName]
+	return drink.filter(function(ingredient) {
+		return ingredients.indexOf(ingredient) != -1
+	})
+}
+
+var AllDrinks = new Drink({
+	// speciality drinks
 	Grouse_Hiball: ['Lemon Juice', 'Soda', 'Scotch'],
 	Scottish_Maid: ['Famous Grouse Scotch', 'St Germain elderflower liquer', 'Cucumber', 'Lemon Juice'],
 	Rob_Roy: ['Famous Grouse Scotch', 'Sweet Vermouth', 'Bitters'],
-	Blood_and_Sand: ['Famous Grouse Scotch', 'Cherry Heering Brandy', 'Freshly Squeezed Orange Juice', 'Sweet Vermouth']
-})
-
-var classics = new Drink({
+	Blood_and_Sand: ['Famous Grouse Scotch', 'Cherry Heering Brandy', 'Freshly Squeezed Orange Juice', 'Sweet Vermouth'],
+	// classic drinks
 	Old_Fashioned: ['Bourbon', 'Bitters', 'Freshly Squeezed Orange Juice', 'Local Cane Sugar'],
 	Perfect_Manhattan: ['Bourbon', 'Sweet Vermouth'],
 	Sazerac: ['Bourbon', 'Bitters', 'Local Cane Sugar', 'Lemon Peel'],
@@ -112,7 +120,9 @@ function yesIngredients() {
 
 function noIngredients() {
 	if (bartenderQuestions.question[questionIndex]) {
-			$userPreference.text("No thanks.");
+		// add ingredient to disliked ingredients list
+		drinkIngredientsNotRequested.push(drinkIngredients.ingredients[questionIndex])
+		$userPreference.text("No thanks.");
 	}
 }
 
@@ -120,60 +130,43 @@ function endQuestions() {
 	if (questionIndex == 5) {
 			// displays user drink preferences
 			var preferences = new Ingredients(drinkIngredientsRequested);
+			var nonPreferences = new Ingredients(drinkIngredientsNotRequested);
 			
+			//random number between 0 and 3, if added + 1, it'll be between 1 and 3
+			var randomNumber = Math.floor(Math.random() * 3) 
 			
-			var randomNumber = Math.floor(Math.random() * 3) //random number between 0 and 3, if added + 1, it'll be between 1 and 3
-			//0 because
-			var createDrink = " "
-			
-			var ingredients = []
 			var pantryList = []
 			for (var i = 0 ; i < preferences.ingredients.length; i++) {
 				 var pref = preferences.ingredients[i]; //lists each item in preferences
 				 console.log('preference: ', pref);
 				 var list = pantryItems.getItemList(pref);
-				 console.log('Concat', pantryList, list);
 				 pantryList = pantryList.concat(list)
-				 var ingredient = pantryItems.getItem(pref, randomNumber) //sends each pref and the randomNum as index
-				 createDrink += ingredient + ", ";
-				 console.log('random selection for ' + pref + ' is ', createDrink)
-				ingredients.push(ingredient)
+			}
+			
+			var pantryDislikeList = []
+			for (var i = 0 ; i < nonPreferences.ingredients.length; i++) {
+				 var pref = nonPreferences.ingredients[i]; //lists each item in preferences
+				 console.log('preference: ', pref);
+				 var list = pantryItems.getItemList(pref);
+				 pantryDislikeList = pantryDislikeList.concat(list)
 			}
 
-			//$displayQuestion.text("William made you a special cocktail with the following ingredients: "  + createDrink);
-			
 			var bestDrink = null
 			var bestDrinkName
-			var matches_old = 0
-            Object.keys(classics.drinks).forEach(function(name) {
-				var matches = 0
-				var drink = classics.drinks[name]
-				pantryList.forEach(function(ingredient) {
-					if (drink.indexOf(ingredient) != -1) {
-						matches++
-					}
-				})
-				if (matches_old <= matches) {
+			var most_matches = 0
+            Object.keys(AllDrinks.drinks).forEach(function(name) {
+				var matchesLike = AllDrinks.matchingIngredients(name, pantryList).length
+				var matchesDislike = AllDrinks.matchingIngredients(name, pantryDislikeList).length
+				var matches = matchesLike - matchesDislike
+				var drink = AllDrinks.drinks[name]
+				
+				if (most_matches <= matches) {
 					bestDrink = drink
 					bestDrinkName = name.replace(/_/g, " ")
+					most_matches = matches
 				}
-				matches_old = matches
             })
 
-            Object.keys(specialties.drinks).forEach(function(name) {
-				var matches = 0
-				var drink = specialties.drinks[name]
-				pantryList.forEach(function(ingredient) {
-					if (drink.indexOf(ingredient) != -1) {
-						matches++
-					}
-				})
-				if (matches_old <= matches) {
-					bestDrink = drink
-					bestDrinkName = name.replace(/_/g, " ")
-				}
-				matches_old = matches
-            })
             var cocktail = '<li id="cocktail"><h4>William made you a... <br/></br><span style="color: red; font-size: 57px"><em>' + bestDrinkName + '</em></span></h4></li>'
             var cocktailIngredients = '<li><h5><span style="color: red">' +bestDrink.join("</br>") + '</span></h5></li>'
 			$barPage.hide('puff', function() {
